@@ -1,0 +1,36 @@
+name: Pipeline de Testes
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  unit-tests:
+    name: Testes Unitários
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executando testes unitários
+        run: |
+          echo "Rodando testes unitários"
+  integration-tests:
+    name: Testes de Integração
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executando testes de integração
+        run: |
+          echo "Rodando testes de integração"
+  trivy:
+    name: Análise Trivy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executando análise Trivy
+        run: |
+          echo "Rodando análise Trivy"
+  sonarqube:
+    needs: [unit-tests]
+    name: Análise SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executando análise SonarQube
+        run: |
+          echo "Rodando análise SonarQube"

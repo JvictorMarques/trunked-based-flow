@@ -1,0 +1,40 @@
+name: Pipeline de Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build do Projeto
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compilando o projeto
+        run: |
+          echo "Compilando o projeto"
+  develop:
+    needs: [build]
+    name: Deploy para desenvolvimento
+    runs-on: ubuntu-latest
+    environment: Desenvolvimento
+    steps:
+      - name: Realizando o Deploy
+        run: |
+          echo "Rodando o deploy para desenvolvimento"
+  e2e-tests:
+    needs: [develop]
+    name: Testes E2E
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executando testes E2E
+        run: |
+          echo "Rodando testes E2E"
+  production:
+    needs: [e2e-tests]
+    name: Deploy para produção
+    runs-on: ubuntu-latest
+    environment: Produção
+    steps:
+      - name: Realizando o Deploy
+        run: |
+          echo "Rodando o deploy para produção"
